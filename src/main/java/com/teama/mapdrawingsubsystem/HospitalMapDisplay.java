@@ -490,70 +490,7 @@ public class HospitalMapDisplay implements MapDisplay {
      */
     private boolean isPointOnLine(Location loc, Line line) {
 
-        //System.out.println("SX: "+line.getStart().getxCoord()+" SY: "+line.getStart().getyCoord()+" EX: "+line.getEnd().getxCoord()+" EY: "+line.getEnd().getyCoord());
-        //System.out.println("Weight: " + line.getWeight());
 
-        double inputX = loc.getxCoord();
-        double inputY = loc.getyCoord();
-
-        double x1 = line.getStart().getxCoord();
-        double y1 = line.getStart().getyCoord();
-        double weight = 8;
-
-        double x2 = line.getEnd().getxCoord();
-        double y2 = line.getEnd().getyCoord();
-
-        if (line.getStart().getxCoord() > line.getEnd().getxCoord()) {
-            x1 = line.getEnd().getxCoord();
-            y1 = line.getEnd().getyCoord();
-            x2 = line.getStart().getxCoord();
-            y2 = line.getStart().getyCoord();
-        }
-/*
-        if (y2>=y1 && (!(inputY<=y2 && inputY >=y1))) {
-            return false;
-        }
-        else if (y1>=y2&& (!(inputY>=y2 && inputY <= y1))) {
-            return false;
-        }
-        */
-        // central line:
-        //TODO: KINDA works. make this work for nearly vertical or vertical lines...
-        double slope = (y2-y1)/(x2-x1);
-        double b = y1-slope*x1;
-        double alpha = Math.atan(slope);
-
-        double yBounds = weight/(2*Math.sin((Math.PI/2)-alpha));
-
-
-
-
-        double originY = slope*inputX + b;
-        System.out.print("Origin Y: "+ originY);
-        //boolean isOnLine = false;
-        double maxY = originY + yBounds;
-        double minY = originY - yBounds;
-        System.out.println("LOC: " +  inputX + " " + inputY +  " " + "maxY: " + maxY + " Min Y: " + minY);
-        if (inputY <= maxY && inputY >= minY) {
-            System.out.println("In y bounds.");
-        }
-        if (inputX<= x2 && inputX >= x1) {
-            System.out.println("In x bounds.");
-        }
-        return(inputY <= maxY && inputY >= minY) && (inputX<= x2 && inputX >= x1);
-        /*
-        if (x2>=x1) {
-            isOnLine =  (inputY <= maxY && inputY >= minY) && (inputX<= x2 && inputX >= x1);
-        }
-        else {
-            isOnLine = (inputY <= maxY && inputY >= minY) && (inputX<= x1 && inputX >= x2);
-
-        }
-
-        return isOnLine;
-*/
-
-        /*
         Vector edge = new Vector(line.start,line.end);
         Vector mouse = new Vector(loc,line.end);
         Vector proj = edge.projection(mouse);
@@ -571,7 +508,7 @@ public class HospitalMapDisplay implements MapDisplay {
             if( proj.x<=0) return  true;
             else return false;
         }
-        */
+
     }
 
     private class Vector{
